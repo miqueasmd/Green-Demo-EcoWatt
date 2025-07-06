@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Brain, Bot, Cloud, ArrowRight, Search, Layout, Link2, TrendingUp, X } from "lucide-react";
+import { X } from "lucide-react";
 import React from 'react';
-import en from '../i18n/en.json';
-import es from '../i18n/es.json';
 import config from '../config.json';
 
 export default function LandingPage() {
@@ -11,8 +9,6 @@ export default function LandingPage() {
   const [showLegalNotice, setShowLegalNotice] = useState(false);
   const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
   const [darkTheme, setDarkTheme] = useState(false);
-  const dict = { en, es };
-  const t = (key) => dict[lang][key];
 
   // Enhanced cursor glow effect
   const [coords, setCoords] = useState({ x: -100, y: -100 });
@@ -477,59 +473,6 @@ export default function LandingPage() {
         </div>
       )}
     </div>
-  );
-}
-
-// Component for related counters
-// Slow animation: 2 seconds per unit
-// Animate money by 1 each time, synchronized with hours
-function AnimatedCounters({ lang }) {
-  const [hours, setHours] = useState(100);
-  const [money, setMoney] = useState(10000);
-  // Slow animation: 2 seconds per unit
-  React.useEffect(() => {
-    if (hours < 300) {
-      const timeout = setTimeout(() => setHours(hours + 1), 2000);
-      return () => clearTimeout(timeout);
-    }
-  }, [hours]);
-  // Animate money by 1 each time, synchronized with hours
-  React.useEffect(() => {
-    const target = hours * 100;
-    const diff = target - money;
-    if (diff > 0) {
-      const intervalMs = 2000 / diff; // distribute the 2s among the remaining dollars/euros
-      const interval = setInterval(() => {
-        setMoney((prev) => {
-          if (prev + 1 >= target) return target;
-          return prev + 1;
-        });
-      }, intervalMs);
-      return () => clearInterval(interval);
-    }
-  }, [hours, money]);
-  const rawProductivity = 2 + (hours - 100) * 0.5;
-  const productivity = Number.isInteger(rawProductivity) ? rawProductivity : rawProductivity.toFixed(1);
-  const labels = {
-    time: { es: 'Gana tiempo', en: 'Save time' },
-    money: { es: 'Ahorra dinero', en: 'Save money' },
-    productivity: { es: 'Productividad', en: 'Productivity' },
-  };
-  return (
-    <>
-      <div className="text-center">
-        <div className="text-3xl md:text-4xl font-bold text-purple-400 mb-2">{hours}h</div>
-        <div className="text-sm text-slate-400">{labels.time[lang]}</div>
-      </div>
-      <div className="text-center">
-        <div className="text-3xl md:text-4xl font-bold text-purple-400 mb-2">{lang === 'es' ? '€' : '$'}{money.toLocaleString()}</div>
-        <div className="text-sm text-slate-400">{labels.money[lang]}</div>
-      </div>
-      <div className="text-center">
-        <div className="text-3xl md:text-4xl font-bold text-purple-400 mb-2">{productivity}x</div>
-        <div className="text-sm text-slate-400">{labels.productivity[lang]}</div>
-      </div>
-    </>
   );
 }
 
