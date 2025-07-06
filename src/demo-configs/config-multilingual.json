@@ -1,0 +1,57 @@
+{
+  "brand": {
+    "name": "Multilingual Demo",
+    "logo": "/public/logo-multilingual-demo.png",
+    "favicon": "/public/favicon-multilingual-demo.png"
+  },
+  "theme": {
+    "primaryColor": "#6366f1",
+    "secondaryColor": "#a5b4fc",
+    "backgroundColor": "#f3f4f6",
+    "textColor": "#1e293b"
+  },
+  "hero": {
+    "title": {
+      "en": "Welcome to the Multilingual Demo",
+      "es": "Bienvenido a la Demo Multilingüe"
+    },
+    "subtitle": {
+      "en": "Your landing, your language.",
+      "es": "Tu landing, tu idioma."
+    },
+    "cta": {
+      "en": "Get Started",
+      "es": "Comenzar"
+    }
+  },
+  "services": [
+    {
+      "title": { "en": "Service One", "es": "Servicio Uno" },
+      "description": { "en": "Description in English.", "es": "Descripción en español." }
+    },
+    {
+      "title": { "en": "Service Two", "es": "Servicio Dos" },
+      "description": { "en": "Another description.", "es": "Otra descripción." }
+    }
+  ],
+  "stats": [
+    { "label": { "en": "Users", "es": "Usuarios" }, "value": 1000 },
+    { "label": { "en": "Projects", "es": "Proyectos" }, "value": 200 }
+  ],
+  "counters": [
+    { "label": { "en": "Coffees", "es": "Cafés" }, "value": 500 },
+    { "label": { "en": "Lines of code", "es": "Líneas de código" }, "value": 100000 }
+  ],
+  "workflow": [
+    { "step": { "en": "Start", "es": "Inicio" }, "description": { "en": "First step.", "es": "Primer paso." } },
+    { "step": { "en": "Continue", "es": "Continuar" }, "description": { "en": "Second step.", "es": "Segundo paso." } }
+  ],
+  "legal": {
+    "privacy": { "en": "Privacy policy.", "es": "Política de privacidad." },
+    "terms": { "en": "Terms.", "es": "Términos." }
+  },
+  "contact": {
+    "email": "info@multilingual.com",
+    "phone": "+34 900 654 321"
+  }
+} 

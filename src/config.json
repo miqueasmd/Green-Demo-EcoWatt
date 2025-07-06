@@ -1,0 +1,175 @@
+{
+  "brand": {
+    "name": "EcoWatt",
+    "primaryColor": "#10b981",
+    "secondaryColor": "#06b6d4",
+    "favicon": "/favicon-green-demo.png"
+  },
+  "languages": {
+    "default": "en",
+    "available": ["en", "es"],
+    "multilingual": true
+  },
+  "content": {
+    "en": {
+      "tagline": "Clean energy for a brighter future",
+      "subtitle": "Renewable energy solutions for homes and businesses",
+      "cta": "Get a quote",
+      "learnMore": "Discover more",
+      "services": [
+        {
+          "title": "Solar Panels",
+          "desc": "Install solar panels and reduce your energy bill."
+        },
+        {
+          "title": "Wind Energy",
+          "desc": "Harness the power of wind for your business or home."
+        }
+      ],
+      "stats": [
+        {
+          "value": "120+",
+          "label": "Projects Completed"
+        },
+        {
+          "value": "98%",
+          "label": "Client Satisfaction"
+        },
+        {
+          "value": "EN/ES",
+          "label": "Bilingual Support"
+        },
+        {
+          "value": "∞",
+          "label": "Green Integrations"
+        }
+      ],
+      "counters": [
+        {
+          "value": 120000,
+          "unit": "€",
+          "label": "Money saved"
+        },
+        {
+          "value": 3200,
+          "unit": "trees",
+          "label": "Trees saved"
+        },
+        {
+          "value": 850,
+          "unit": "kg CO₂",
+          "label": "CO₂ avoided"
+        }
+      ],
+      "footer": "© 2025 EcoWatt. All rights reserved.",
+      "legal_notice": "Legal Notice",
+      "privacy_policy": "Privacy Policy"
+    },
+    "es": {
+      "tagline": "Energía limpia para un futuro brillante",
+      "subtitle": "Soluciones de energía renovable para hogares y empresas",
+      "cta": "Solicita presupuesto",
+      "learnMore": "Descubre más",
+      "services": [
+        {
+          "title": "Paneles Solares",
+          "desc": "Instala paneles solares y reduce tu factura de energía."
+        },
+        {
+          "title": "Energía Eólica",
+          "desc": "Aprovecha la fuerza del viento para tu empresa o casa."
+        }
+      ],
+      "stats": [
+        {
+          "value": "120+",
+          "label": "Proyectos Completados"
+        },
+        {
+          "value": "98%",
+          "label": "Satisfacción Cliente"
+        },
+        {
+          "value": "EN/ES",
+          "label": "Soporte Bilingüe"
+        },
+        {
+          "value": "∞",
+          "label": "Integraciones verdes"
+        }
+      ],
+      "counters": [
+        {
+          "value": 120000,
+          "unit": "€",
+          "label": "Dinero ahorrado"
+        },
+        {
+          "value": 3200,
+          "unit": "árboles",
+          "label": "Árboles salvados"
+        },
+        {
+          "value": 850,
+          "unit": "kg CO₂",
+          "label": "CO₂ evitado"
+        }
+      ],
+      "footer": "© 2025 EcoWatt. Todos los derechos reservados.",
+      "legal_notice": "Aviso Legal",
+      "privacy_policy": "Política de Privacidad"
+    }
+  },
+  "domain": {
+    "type": "subdomain",
+    "subdomain": "ecowatt.mmdlab.tech",
+    "customDomain": ""
+  },
+  "contact": {
+    "email": "info@ecowatt.com",
+    "formAction": "https://formsubmit.co/info@ecowatt.com",
+    "whatsapp": "+34999999999"
+  },
+  "workflow": [
+    {
+      "title": "Briefing",
+      "desc": "We analyze your needs and propose a solution."
+    },
+    {
+      "title": "Proposal",
+      "desc": "You receive a custom quote and timeline."
+    },
+    {
+      "title": "Implementation",
+      "desc": "We install and configure your renewable system."
+    },
+    {
+      "title": "Support",
+      "desc": "Ongoing support and optimization."
+    }
+  ],
+  "seo": {
+    "en": {
+      "title": "EcoWatt - Clean energy for a brighter future",
+      "description": "Renewable energy solutions for homes and businesses",
+      "keywords": "energy, renewable, solar, wind, green"
+    },
+    "es": {
+      "title": "EcoWatt - Energía limpia para un futuro brillante",
+      "description": "Soluciones de energía renovable para hogares y empresas",
+      "keywords": "energía, renovable, solar, eólica, verde"
+    }
+  },
+  "meta": {
+    "en": {
+      "title": "EcoWatt - Clean energy for a brighter future",
+      "description": "Renewable energy solutions for homes and businesses.",
+      "canonical": "https://ecowatt.demo.com"
+    },
+    "es": {
+      "title": "EcoWatt - Energía limpia para un futuro brillante",
+      "description": "Soluciones de energía renovable para hogares y empresas.",
+      "canonical": "https://ecowatt.demo.com/es"
+    }
+  }
+}

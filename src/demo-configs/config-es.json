@@ -1,0 +1,48 @@
+{
+  "brand": {
+    "name": "Demo Español",
+    "logo": "/public/logo-es-demo.png",
+    "favicon": "/public/demo-favicons/favicon-es-demo.png"
+  },
+  "theme": {
+    "primaryColor": "#f59e42",
+    "secondaryColor": "#b45309",
+    "backgroundColor": "#fff7ed",
+    "textColor": "#78350f"
+  },
+  "hero": {
+    "title": "Bienvenido a la Demo Española",
+    "subtitle": "Tu landing, tu idioma.",
+    "cta": "Comenzar"
+  },
+  "services": [
+    {
+      "title": "Servicio Uno",
+      "description": "Descripción del servicio uno."
+    },
+    {
+      "title": "Servicio Dos",
+      "description": "Descripción del servicio dos."
+    }
+  ],
+  "stats": [
+    { "label": "Usuarios", "value": 1000 },
+    { "label": "Proyectos", "value": 200 }
+  ],
+  "counters": [
+    { "label": "Cafés", "value": 500 },
+    { "label": "Líneas de código", "value": 100000 }
+  ],
+  "workflow": [
+    { "step": "Inicio", "description": "Primer paso." },
+    { "step": "Continuar", "description": "Segundo paso." }
+  ],
+  "legal": {
+    "privacy": "Política de privacidad.",
+    "terms": "Términos."
+  },
+  "contact": {
+    "email": "info@esdemo.com",
+    "phone": "+34 900 654 321"
+  }
+} 

@@ -1,0 +1,531 @@
+{
+  "name": "Landing Express Automation",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "landing-express",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "webhookId": "landing-express-webhook"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extract data from webhook\nconst data = $input.first().json;\nconst useAI = data.useAI || false;\nreturn [{ json: { ...data, useAI } }];"
+      },
+      "id": "process-data",
+      "name": "Process Form Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {},
+          "conditions": [
+            {
+              "id": "use-ai",
+              "leftValue": "={{ $json.useAI }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "boolean",
+                "operation": "equal"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "if-use-ai",
+      "name": "If Use AI (Paid Add-on)",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [600, 300]
+    },
+    {
+      "parameters": {
+        "resource": "completion",
+        "model": "gpt-3.5-turbo",
+        "prompt": "Generate 3 realistic impact metrics for a renewable energy company called {{$json.brandName}}. Output as JSON: [{value, label}]",
+        "temperature": 0.7,
+        "maxTokens": 120
+      },
+      "id": "openai-generate-counters",
+      "name": "OpenAI Generate Counters",
+      "type": "n8n-nodes-base.openai",
+      "typeVersion": 1,
+      "position": [800, 200]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Merge AI-generated counters into config\nconst aiCounters = $input.first().json.choices[0].text ? JSON.parse($input.first().json.choices[0].text) : []\nconst data = $item(0).$node[\"Process Form Data\"].json;\nreturn [{ json: { ...data, aiCounters } }];"
+      },
+      "id": "merge-ai-counters",
+      "name": "Merge AI Counters",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1000, 200]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Build config using either AI or user-provided counters\nconst data = $input.first().json;\nconst counters = data.useAI && data.aiCounters ? data.aiCounters : data.counters;\nconst config = { ...data, counters };\nreturn [{ json: config }];"
+      },
+      "id": "build-config",
+      "name": "Build Config",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1200, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://api.github.com/repos/MMDLab/landing-template/generate",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/vnd.github.v3+json"
+            },
+            {
+              "name": "Authorization",
+              "value": "token {{ $env.GITHUB_TOKEN }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "owner",
+              "value": "MMDLab-Clients"
+            },
+            {
+              "name": "name",
+              "value": "={{ $json.repoName }}"
+            },
+            {
+              "name": "private",
+              "value": "false"
+            },
+            {
+              "name": "include_all_branches",
+              "value": "false"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "create-repo",
+      "name": "Create Repository",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Generate configuration JSON\nconst { generateConfig } = require('./scripts/configure-landing');\n\nconst config = generateConfig($input.first().json.config);\nconst configJson = JSON.stringify(config, null, 2);\nconst configBase64 = Buffer.from(configJson).toString('base64');\n\n// Generate CNAME content\nlet cnameContent = '';\nif (config.domain.type === 'subdomain') {\n  cnameContent = config.domain.subdomain;\n} else if (config.domain.type === 'custom' && config.domain.customDomain) {\n  cnameContent = config.domain.customDomain;\n} else {\n  cnameContent = config.domain.subdomain;\n}\n\nconst cnameBase64 = Buffer.from(cnameContent).toString('base64');\n\nreturn [{\n  json: {\n    ...$input.first().json,\n    configJson,\n    configBase64,\n    cnameContent,\n    cnameBase64,\n    repoUrl: $input.first().json.clone_url,\n    repoName: $input.first().json.name\n  }\n}];"
+      },
+      "id": "generate-config",
+      "name": "Generate Configuration",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://api.github.com/repos/MMDLab-Clients/={{ $json.repoName }}/contents/src/config.json",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/vnd.github.v3+json"
+            },
+            {
+              "name": "Authorization",
+              "value": "token {{ $env.GITHUB_TOKEN }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "message",
+              "value": "Configure landing page for client"
+            },
+            {
+              "name": "content",
+              "value": "={{ $json.configBase64 }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "update-config",
+      "name": "Update Config File",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1120, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://api.github.com/repos/MMDLab-Clients/={{ $json.repoName }}/contents/CNAME",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/vnd.github.v3+json"
+            },
+            {
+              "name": "Authorization",
+              "value": "token {{ $env.GITHUB_TOKEN }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "message",
+              "value": "Set domain configuration"
+            },
+            {
+              "name": "content",
+              "value": "={{ $json.cnameBase64 }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "update-cname",
+      "name": "Update CNAME File",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1340, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://api.github.com/repos/MMDLab-Clients/={{ $json.repoName }}/pages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "application/vnd.github.v3+json"
+            },
+            {
+              "name": "Authorization",
+              "token {{ $env.GITHUB_TOKEN }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "source",
+              "value": "{\"branch\":\"main\",\"path\":\"/\"}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "enable-pages",
+      "name": "Enable GitHub Pages",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1560, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://api.github.com/repos/MMDLab-Clients/={{ $json.repoName }}/pages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "application/vnd.github.v3+json"
+            },
+            {
+              "name": "Authorization",
+              "token {{ $env.GITHUB_TOKEN }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "check-pages",
+      "name": "Check Pages Status",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1780, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "pages-ready",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "built",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "check-status",
+      "name": "Check if Pages Ready",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [2000, 300]
+    },
+    {
+      "parameters": {
+        "resource": "email",
+        "operation": "send",
+        "fromEmail": "info@mmdlab.tech",
+        "toEmail": "={{ $('Process Form Data').item.json.contactEmail }}",
+        "subject": "Your landing page is ready! 🚀",
+        "text": "Hi there!\n\nYour landing page has been successfully created and is now live!\n\n🌐 **Live URL**: https://{{ $json.url }}\n📁 **Repository**: {{ $('Process Form Data').item.json.repoUrl }}\n\n**What you can do now:**\n1. Visit your landing page to see it live\n2. Edit content directly in GitHub (no coding required)\n3. Request changes by opening an issue in the repository\n\n**Need help?**\n- Watch our 3-minute tutorial: [Link to Loom video]\n- Contact us: info@mmdlab.tech\n\nBest regards,\nMMD Lab Team",
+        "options": {}
+      },
+      "id": "send-email",
+      "name": "Send Success Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [2220, 200]
+    },
+    {
+      "parameters": {
+        "resource": "issue",
+        "operation": "create",
+        "repository": "={{ $('Process Form Data').item.json.repoName }}",
+        "owner": "MMDLab-Clients",
+        "title": "Landing page created successfully",
+        "body": "✅ Landing page has been created and deployed successfully!\n\n**Client Details:**\n- Brand: {{ $('Process Form Data').item.json.brandName }}\n- Contact: {{ $('Process Form Data').item.json.contactEmail }}\n- Language: {{ $('Process Form Data').item.json.language }}\n- Multilingual: {{ $('Process Form Data').item.json.multilingual }}\n- Domain: {{ $('Process Form Data').item.json.config.domainType }}\n\n**Live URL:** https://{{ $json.url }}\n\n**Next Steps:**\n1. Client has been notified via email\n2. Landing page is ready for use\n3. Monitor for any issues or change requests",
+        "labels": ["deployed", "success"],
+        "options": {}
+      },
+      "id": "create-issue",
+      "name": "Create Success Issue",
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1,
+      "position": [2220, 400]
+    },
+    {
+      "parameters": {
+        "resource": "email",
+        "operation": "send",
+        "fromEmail": "info@mmdlab.tech",
+        "toEmail": "info@mmdlab.tech",
+        "subject": "Landing page creation in progress",
+        "text": "A new landing page is being created:\n\n**Client Details:**\n- Brand: {{ $('Process Form Data').item.json.brandName }}\n- Contact: {{ $('Process Form Data').item.json.contactEmail }}\n- Repository: {{ $('Process Form Data').item.json.repoUrl }}\n\n**Status:** Pages deployment in progress\n\nThis is an automated notification.",
+        "options": {}
+      },
+      "id": "notify-admin",
+      "name": "Notify Admin",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [2220, 500]
+    }
+  ],
+  "connections": {
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Process Form Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Form Data": {
+      "main": [
+        [
+          {
+            "node": "If Use AI (Paid Add-on)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Use AI (Paid Add-on)": {
+      "main": [
+        [
+          {
+            "node": "OpenAI Generate Counters",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Build Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Generate Counters": {
+      "main": [
+        [
+          {
+            "node": "Merge AI Counters",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge AI Counters": {
+      "main": [
+        [
+          {
+            "node": "Build Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Repository": {
+      "main": [
+        [
+          {
+            "node": "Generate Configuration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Configuration": {
+      "main": [
+        [
+          {
+            "node": "Update Config File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Config File": {
+      "main": [
+        [
+          {
+            "node": "Update CNAME File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update CNAME File": {
+      "main": [
+        [
+          {
+            "node": "Enable GitHub Pages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enable GitHub Pages": {
+      "main": [
+        [
+          {
+            "node": "Check Pages Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Pages Status": {
+      "main": [
+        [
+          {
+            "node": "Check if Pages Ready",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check if Pages Ready": {
+      "main": [
+        [
+          {
+            "node": "Send Success Email",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Create Success Issue",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Notify Admin",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2024-01-01T00:00:00.000Z",
+      "updatedAt": "2024-01-01T00:00:00.000Z",
+      "id": "landing-express",
+      "name": "Landing Express"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2024-01-01T00:00:00.000Z",
+  "versionId": "1"
+} 

@@ -1,0 +1,82 @@
+{
+  "brand": {
+    "name": "Green Demo",
+    "logo": "/public/logo-green-demo.png",
+    "favicon": "/public/demo-favicons/favicon-green-demo.png"
+  },
+  "theme": {
+    "primaryColor": "#22c55e",
+    "secondaryColor": "#166534",
+    "backgroundColor": "#f0fdf4",
+    "textColor": "#0f172a"
+  },
+  "hero": {
+    "title": "Ahorra energía y cuida el planeta",
+    "subtitle": "Soluciones verdes para empresas sostenibles.",
+    "cta": "Solicita tu demo"
+  },
+  "services": [
+    {
+      "title": "Eficiencia energética",
+      "description": "Reduce el consumo y ahorra costes."
+    },
+    {
+      "title": "Energía renovable",
+      "description": "Paneles solares y más."
+    },
+    {
+      "title": "Consultoría ambiental",
+      "description": "Expertos en sostenibilidad."
+    }
+  ],
+  "stats": [
+    {
+      "label": "Clientes satisfechos",
+      "value": 120
+    },
+    {
+      "label": "Proyectos completados",
+      "value": 85
+    }
+  ],
+  "counters": [
+    {
+      "label": "Árboles salvados",
+      "value": 3200
+    },
+    {
+      "label": "Toneladas de CO₂ evitadas",
+      "value": 540
+    },
+    {
+      "label": "€ ahorrados",
+      "value": 120000
+    }
+  ],
+  "workflow": [
+    {
+      "step": "Contacto inicial",
+      "description": "Analizamos tus necesidades."
+    },
+    {
+      "step": "Propuesta personalizada",
+      "description": "Te enviamos una solución a medida."
+    },
+    {
+      "step": "Implementación",
+      "description": "Ponemos en marcha el proyecto."
+    },
+    {
+      "step": "Seguimiento",
+      "description": "Medimos resultados y optimizamos."
+    }
+  ],
+  "legal": {
+    "privacy": "Tu privacidad es importante para nosotros.",
+    "terms": "Consulta nuestros términos y condiciones."
+  },
+  "contact": {
+    "email": "info@greendemo.com",
+    "phone": "+34 900 123 456"
+  }
+} 
