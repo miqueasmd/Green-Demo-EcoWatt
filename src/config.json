@@ -3,7 +3,7 @@
     "name": "EcoWatt",
     "primaryColor": "#10b981",
     "secondaryColor": "#06b6d4",
-    "favicon": "/favicon-green-demo.png"
+    "favicon": "/demo-favicons/favicon-green-demo.png"
   },
   "languages": {
     "default": "en",
@@ -164,12 +164,12 @@
     "en": {
       "title": "EcoWatt - Clean energy for a brighter future",
       "description": "Renewable energy solutions for homes and businesses.",
-      "canonical": "https://ecowatt.demo.com"
+      "canonical": "https://ecowatt.mmdlab.tech"
     },
     "es": {
       "title": "EcoWatt - Energía limpia para un futuro brillante",
       "description": "Soluciones de energía renovable para hogares y empresas.",
-      "canonical": "https://ecowatt.demo.com/es"
+      "canonical": "https://ecowatt.mmdlab.tech/es"
     }
   }
 }
