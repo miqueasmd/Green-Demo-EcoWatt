@@ -8,7 +8,7 @@ export default function LandingPage() {
   const [lang, setLang] = useState(config.languages.default);
   const [showLegalNotice, setShowLegalNotice] = useState(false);
   const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
-  const [darkTheme, setDarkTheme] = useState(false);
+  const [darkTheme, setDarkTheme] = useState(true);
 
   // Enhanced cursor glow effect
   const [coords, setCoords] = useState({ x: -100, y: -100 });
@@ -105,18 +105,6 @@ export default function LandingPage() {
           {/* Theme toggle buttons */}
           <div className="flex gap-2 mt-2">
             <button
-              onClick={() => setDarkTheme(false)}
-              className={`px-3 py-1 rounded-lg font-semibold transition-all border text-xs ${
-                !darkTheme
-                  ? "bg-[var(--primary)] text-white border-[var(--primary)] shadow"
-                  : "bg-white/10 text-white/80 border-transparent hover:bg-white/20"
-              }`}
-              aria-label="Light theme"
-              style={{minWidth: 44}}
-            >
-              Light
-            </button>
-            <button
               onClick={() => setDarkTheme(true)}
               className={`px-3 py-1 rounded-lg font-semibold transition-all border text-xs ${
                 darkTheme
@@ -127,6 +115,18 @@ export default function LandingPage() {
               style={{minWidth: 44}}
             >
               Dark
+            </button>
+            <button
+              onClick={() => setDarkTheme(false)}
+              className={`px-3 py-1 rounded-lg font-semibold transition-all border text-xs ${
+                !darkTheme
+                  ? "bg-[var(--primary)] text-white border-[var(--primary)] shadow"
+                  : "bg-white/10 text-white/80 border-transparent hover:bg-white/20"
+              }`}
+              aria-label="Light theme"
+              style={{minWidth: 44}}
+            >
+              Light
             </button>
           </div>
         </nav>
@@ -233,7 +233,7 @@ export default function LandingPage() {
       </section>
 
       {/* Workflow Section */}
-      {Array.isArray(config.workflow) && config.workflow.length > 0 && (
+      {Array.isArray(content.workflow) && content.workflow.length > 0 && (
         <section className="relative z-10 max-w-5xl mx-auto my-24">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 bg-gradient-to-r from-white to-[var(--primary)] bg-clip-text text-transparent">
             {lang === 'es' ? 'Proceso' : 'Workflow'}
@@ -241,7 +241,7 @@ export default function LandingPage() {
           <div className="relative flex flex-col gap-6 md:gap-4">
             {/* Vertical timeline line (desktop only, always behind connectors) */}
             <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 -translate-x-1/2 bg-white/80 z-0 rounded-full" />
-            {config.workflow.map((step, idx) => (
+            {content.workflow.map((step, idx) => (
               <div key={idx} className="flex flex-col md:flex-row items-center md:items-center relative z-10">
                 {/* Alternating left/right */}
                 {idx % 2 === 0 ? (

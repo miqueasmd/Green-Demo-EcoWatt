@@ -63,7 +63,25 @@
       ],
       "footer": "© 2025 EcoWatt. All rights reserved.",
       "legal_notice": "Legal Notice",
-      "privacy_policy": "Privacy Policy"
+      "privacy_policy": "Privacy Policy",
+      "workflow": [
+        {
+          "title": "Briefing",
+          "desc": "We analyze your needs and propose a solution."
+        },
+        {
+          "title": "Proposal",
+          "desc": "You receive a custom quote and timeline."
+        },
+        {
+          "title": "Implementation",
+          "desc": "We install and configure your renewable system."
+        },
+        {
+          "title": "Support",
+          "desc": "Ongoing support and optimization."
+        }
+      ]
     },
     "es": {
       "tagline": "Energía limpia para un futuro brillante",
@@ -117,7 +135,25 @@
       ],
       "footer": "© 2025 EcoWatt. Todos los derechos reservados.",
       "legal_notice": "Aviso Legal",
-      "privacy_policy": "Política de Privacidad"
+      "privacy_policy": "Política de Privacidad",
+      "workflow": [
+        {
+          "title": "Briefing",
+          "desc": "Analizamos tus necesidades y proponemos una solución."
+        },
+        {
+          "title": "Propuesta",
+          "desc": "Recibes un presupuesto personalizado y cronograma."
+        },
+        {
+          "title": "Implementación",
+          "desc": "Instalamos y configuramos tu sistema renovable."
+        },
+        {
+          "title": "Soporte",
+          "desc": "Soporte continuo y optimización."
+        }
+      ]
     }
   },
   "domain": {
