@@ -224,7 +224,7 @@ export default function LandingPage() {
         </div>
         {/* Animated Counters below services */}
         {content.counters && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20">
             {content.counters.map((counter, idx) => (
               <div key={idx} className="text-center">
                 <AnimatedCounter value={counter.value} unit={counter.unit} label={counter.label} />
@@ -483,7 +483,7 @@ function AnimatedCounter({ value, unit, label }) {
   const [displayValue, setDisplayValue] = React.useState(0);
   const intervalRef = React.useRef(null);
 
-  // Only show the first word of the unit (e.g. 'kg' from 'kg CO₂')
+  // Solo la primera palabra de la unidad
   const shortUnit = unit ? unit.split(' ')[0] : '';
 
   React.useEffect(() => {
@@ -509,10 +509,14 @@ function AnimatedCounter({ value, unit, label }) {
     };
   }, [value]);
 
+  // Mostrar la unidad solo si el label no la contiene (ignorando mayúsculas/minúsculas)
+  const showUnit = shortUnit && !label.toLowerCase().includes(shortUnit.toLowerCase());
+
   return (
     <>
       <div className="text-3xl md:text-4xl font-bold text-white mb-2" style={{textShadow: '0 2px 8px rgba(0,0,0,0.18)'}}>
-        {displayValue.toLocaleString()} {shortUnit}
+        {displayValue.toLocaleString()}
+        {showUnit && ` ${shortUnit}`}
       </div>
       <div className="text-lg text-white opacity-80" style={{textShadow: '0 2px 8px rgba(0,0,0,0.18)'}}>
         {label}
