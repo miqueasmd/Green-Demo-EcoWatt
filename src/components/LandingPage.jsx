@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { X } from "lucide-react";
+import { X, Moon, Sun } from "lucide-react";
 import React from 'react';
 import config from '../config.json';
 
@@ -106,26 +106,28 @@ export default function LandingPage() {
           <div className="flex gap-2 mt-2">
             <button
               onClick={() => setDarkTheme(true)}
-              className={`px-3 py-1 rounded-lg font-semibold transition-all border text-xs ${
+              className={`px-3 py-1 rounded-lg font-semibold transition-all border text-xs flex items-center gap-1 ${
                 darkTheme
-                  ? "bg-[var(--primary)] text-white border-[var(--primary)] shadow"
-                  : "bg-white/10 text-white/80 border-transparent hover:bg-white/20"
+                  ? "bg-[var(--primary)] text-white border-[var(--primary)] shadow-lg"
+                  : "bg-white/10 text-white/80 border-transparent hover:bg-white/20 hover:scale-105"
               }`}
               aria-label="Dark theme"
               style={{minWidth: 44}}
             >
+              <Moon size={12} />
               Dark
             </button>
             <button
               onClick={() => setDarkTheme(false)}
-              className={`px-3 py-1 rounded-lg font-semibold transition-all border text-xs ${
+              className={`px-3 py-1 rounded-lg font-semibold transition-all border text-xs flex items-center gap-1 ${
                 !darkTheme
-                  ? "bg-[var(--primary)] text-white border-[var(--primary)] shadow"
-                  : "bg-white/10 text-white/80 border-transparent hover:bg-white/20"
+                  ? "bg-[var(--primary)] text-white border-[var(--primary)] shadow-lg"
+                  : "bg-white/10 text-white/80 border-transparent hover:bg-white/20 hover:scale-105"
               }`}
               aria-label="Light theme"
               style={{minWidth: 44}}
             >
+              <Sun size={12} />
               Light
             </button>
           </div>

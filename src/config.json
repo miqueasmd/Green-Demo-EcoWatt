@@ -166,24 +166,6 @@
     "formAction": "https://formsubmit.co/info@ecowatt.com",
     "whatsapp": "+34999999999"
   },
-  "workflow": [
-    {
-      "title": "Briefing",
-      "desc": "We analyze your needs and propose a solution."
-    },
-    {
-      "title": "Proposal",
-      "desc": "You receive a custom quote and timeline."
-    },
-    {
-      "title": "Implementation",
-      "desc": "We install and configure your renewable system."
-    },
-    {
-      "title": "Support",
-      "desc": "Ongoing support and optimization."
-    }
-  ],
   "seo": {
     "en": {
       "title": "EcoWatt - Clean energy for a brighter future",
