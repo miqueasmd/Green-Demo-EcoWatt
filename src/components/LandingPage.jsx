@@ -40,7 +40,7 @@ export default function LandingPage() {
     <div className={
       "relative min-h-screen text-white overflow-hidden " +
       (darkTheme
-        ? "bg-gradient-to-br from-[var(--secondary)] via-slate-700 to-slate-700"
+        ? "bg-gradient-to-br from-[var(--secondary)] via-slate-600 to-slate-600"
         : "bg-gradient-to-br from-[var(--primary)] via-[var(--secondary)] to-slate-900")
     }>
       {/* Enhanced cursor glow */}
