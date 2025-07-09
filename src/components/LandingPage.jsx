@@ -250,7 +250,7 @@ export default function LandingPage() {
                   <>
                     {/* Left box */}
                     <div className="w-full md:w-1/2 flex flex-col items-end pr-0 md:pr-8">
-                      <div className="flex items-center gap-4 bg-slate-900/60 border border-[var(--primary)]/20 rounded-2xl p-6 shadow-lg max-w-md">
+                      <div className="flex items-center gap-4 bg-slate-900/60 border border-[var(--primary)]/20 rounded-2xl p-6 shadow-lg w-full md:max-w-md">
                         <div className="bg-gradient-to-br from-[var(--primary)] to-[var(--secondary)] rounded-xl p-3">
                           <span className="text-xl font-extrabold text-white">{idx + 1}.</span>
                         </div>
@@ -275,7 +275,7 @@ export default function LandingPage() {
                       <span className="timeline-connector-right" />
                     </div>
                     <div className="w-full md:w-1/2 flex flex-col items-start pl-0 md:pl-8">
-                      <div className="flex items-center gap-4 bg-slate-900/60 border border-[var(--primary)]/20 rounded-2xl p-6 shadow-lg max-w-md">
+                      <div className="flex items-center gap-4 bg-slate-900/60 border border-[var(--primary)]/20 rounded-2xl p-6 shadow-lg w-full md:max-w-md">
                         <div className="bg-gradient-to-br from-[var(--primary)] to-[var(--secondary)] rounded-xl p-3">
                           <span className="text-xl font-extrabold text-white">{idx + 1}.</span>
                         </div>
