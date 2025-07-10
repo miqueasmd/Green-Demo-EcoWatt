@@ -79,9 +79,15 @@ export default function LandingPage() {
 
       {/* Navigation */}
       <header className="relative z-10 flex items-center justify-between px-6 py-6 max-w-7xl mx-auto">
-        <span className="text-3xl font-bold tracking-wide text-white" style={{textShadow: '0 2px 8px rgba(0,0,0,0.18)'}}>
-          {brand.name}
-        </span>
+        <div className="flex items-center gap-3">
+          <span className="text-3xl font-bold tracking-wide text-white" style={{textShadow: '0 2px 8px rgba(0,0,0,0.18)'}}>
+            {brand.name}
+          </span>
+          {/* Test deploy indicator */}
+          <span className="text-xs bg-green-500 text-white px-2 py-1 rounded-full opacity-75">
+            v2.0 ✓
+          </span>
+        </div>
         <nav className="flex flex-col gap-2 items-center">
           {config.languages.multilingual && config.languages.available.length > 1 && (
             <div className="flex gap-2 mb-1">
